@@ -2,6 +2,8 @@
 #include <iostream>
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include "sfml_strand.h"
+#include "arduino/rainbow_display.h"
 
 static const int NUM_LEDS = 16;
 
@@ -14,14 +16,14 @@ int main()
   // Create the window
   sf::RenderWindow window(sf::VideoMode(50, 800), "Ampli-tie", sf::Style::Default, settings);
   
-  // Create our LED circle objects
-  std::vector<sf::CircleShape> leds(NUM_LEDS);
-  for (int i = 0; i < NUM_LEDS; i++) {
-    leds[i] = sf::CircleShape(25.0f);
-    leds[i].setFillColor(sf::Color(10 * i, 10 * i, 10 * i));
-    leds[i].setPosition(0, 50 * i);
-  }
+  // Create our virtual LED "strand"
+  SfmlStrand strand(&window, NUM_LEDS);
 
+  // Create the displays to run on our strand
+  RainbowDisplay rainbowDisplay(&strand);
+
+  // Event loop
+  sf::Clock clock;
   while (window.isOpen()) {
     sf::Event event;
     while (window.pollEvent(event)) {
@@ -30,11 +32,11 @@ int main()
       }
     }
 
-    window.clear();
-    for (int i = 0; i < NUM_LEDS; i++) {
-      window.draw(leds[i]);
+    if (clock.getElapsedTime().asMilliseconds() >= rainbowDisplay.updateTime()) {
+      clock.restart();
+      rainbowDisplay.update();
+      strand.show();
     }
-    window.display();
   }
 
   return 0;
