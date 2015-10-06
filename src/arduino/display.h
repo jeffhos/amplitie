@@ -4,6 +4,7 @@
 #define DISPLAY_H
 
 class Display {
+public:
   virtual long updateTime() = 0;
   virtual void update() = 0;
 };

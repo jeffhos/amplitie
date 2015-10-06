@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "sfml_strand.h"
 #include "arduino/rainbow_display.h"
+#include "arduino/breathe_display.h"
 
 static const int NUM_LEDS = 16;
 
@@ -20,7 +21,10 @@ int main()
   SfmlStrand strand(&window, NUM_LEDS);
 
   // Create the displays to run on our strand
-  RainbowDisplay rainbowDisplay(&strand);
+  std::vector<Display*> displays;
+  displays.push_back(new RainbowDisplay(&strand));
+  displays.push_back(new BreatheDisplay(&strand));
+  int currentDisplay = 0;
 
   // Event loop
   sf::Clock clock;
@@ -29,12 +33,17 @@ int main()
     while (window.pollEvent(event)) {
       if (event.type == sf::Event::Closed) {
         window.close();
+      } else if (event.type == sf::Event::KeyPressed) {
+        currentDisplay++;
+        if (currentDisplay >= displays.size()) {
+          currentDisplay = 0;
+        }
       }
     }
 
-    if (clock.getElapsedTime().asMilliseconds() >= rainbowDisplay.updateTime()) {
+    if (clock.getElapsedTime().asMilliseconds() >= displays[currentDisplay]->updateTime()) {
       clock.restart();
-      rainbowDisplay.update();
+      displays[currentDisplay]->update();
       strand.show();
     }
   }
