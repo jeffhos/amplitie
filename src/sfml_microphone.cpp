@@ -1,3 +1,4 @@
+#include <limits>
 #include "sfml_microphone.h"
 
 SfmlMicrophone::SfmlMicrophone()

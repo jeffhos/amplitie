@@ -8,6 +8,7 @@
 class Strand {
 public:
   virtual void setColor(unsigned int n, Color color) = 0;
+  virtual Color getColor(unsigned int n) = 0;
   virtual unsigned int getLength() = 0;
   virtual void show() = 0;
 };

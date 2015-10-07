@@ -35,6 +35,7 @@ class NeoPixelStrand : public Strand {
 public:
   NeoPixelStrand(Adafruit_NeoPixel* strandP);
   void setColor(unsigned int n, Color color);
+  Color getColor(unsigned int n);
   unsigned int getLength();
   void show();
   void begin();
@@ -55,6 +56,12 @@ void NeoPixelStrand::begin()
 void NeoPixelStrand::setColor(unsigned int n, Color color)
 {
   m_strandP->setPixelColor(n, color.getRed(), color.getGreen(), color.getBlue());
+}
+
+Color NeoPixelStrand::getColor(unsigned int n)
+{
+  uint32_t color = m_strandP->getPixelColor(n);
+  return Color(color >> 16 & 0xFF, color >> 8 & 0xFF, color & 0xFF);
 }
 
 unsigned int NeoPixelStrand::getLength()

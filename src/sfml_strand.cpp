@@ -19,6 +19,12 @@ void SfmlStrand::setColor(unsigned int n, Color color)
   m_leds[n].setFillColor(sf::Color(color.getRed(), color.getGreen(), color.getBlue()));
 }
 
+Color SfmlStrand::getColor(unsigned int n)
+{
+  sf::Color c = m_leds[n].getFillColor();
+  return Color(c.r, c.g, c.b);
+}
+
 unsigned int SfmlStrand::getLength()
 {
   return m_leds.size();

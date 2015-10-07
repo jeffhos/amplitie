@@ -67,3 +67,10 @@ unsigned char Color::getBlue()
 {
   return m_blue;
 }
+
+Color Color::darkenBy(unsigned char amount)
+{
+  return Color((m_red   > amount) ? m_red   - amount : 0,
+               (m_green > amount) ? m_green - amount : 0,
+               (m_blue  > amount) ? m_blue  - amount : 0);
+}

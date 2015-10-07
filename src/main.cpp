@@ -6,6 +6,7 @@
 // #include "arduino/sound_reactive.h"
 #include "arduino/rainbow_display.h"
 #include "arduino/breathe_display.h"
+#include "arduino/rule110_display.h"
 
 static const int NUM_LEDS = 16;
 
@@ -29,6 +30,7 @@ int main()
   // displays.push_back(new SoundReactive(&strand, &mic))
   displays.push_back(new RainbowDisplay(&strand));
   displays.push_back(new BreatheDisplay(&strand));
+  displays.push_back(new Rule110Display(&strand));
   int currentDisplay = 0;
 
   // Event loop

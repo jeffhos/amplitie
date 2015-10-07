@@ -7,6 +7,7 @@ public:
   unsigned char getRed();
   unsigned char getGreen();
   unsigned char getBlue();
+  Color darkenBy(unsigned char amount);
   static const unsigned int WHEEL_MAX = 768;
 
 private:

@@ -10,6 +10,7 @@ class SfmlStrand : public Strand {
 public:
   SfmlStrand(sf::RenderWindow* windowP, unsigned int numLeds);
   void setColor(unsigned int n, Color color);
+  Color getColor(unsigned int n);
   unsigned int getLength();
   void show();
 
