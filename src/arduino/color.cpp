@@ -9,43 +9,48 @@ Color::Color(unsigned char red, unsigned char green, unsigned char blue)
   m_blue = blue;
 }
 
-Color Color::Wheel(unsigned int pos)
+Color Color::wheel(unsigned int pos)
 {
   // Red -> orange
-  if (pos < 256) {
-    return Color(255, pos/2, 0);
+  if (pos < 128)
+  {
+    return Color(255, pos, 0);
   }
-
+  
   // Orange -> yellow
-  if (pos < 512) {
-    return Color(255, pos/2, 0);
+  else if (pos < 256)
+  {
+    pos -= 128;
+    return Color(255, 128 + pos, 0);
   }
-
+  
   // Yellow -> green
-  if (pos < 768) {
-    pos = pos - 512;
-    return Color(255 - pos, 255, 0);
+  else if (pos < 384)
+  {
+    pos -= 256;
+    return Color(255 - (pos * 2), 255, 0);
   }
-
+  
   // Green -> blue
-  if (pos < 1024) {
-    pos = pos - 768;
-    if (pos < 128) {
-      return Color(0, 255, pos*2);
-    }
-    pos = pos - 128;
-    return Color(0, 255 - pos*2, 255);
+  else if (pos < 512)
+  {
+    pos -= 384;
+    return Color(0, 255 - (pos * 2), pos * 2);
   }
-
+  
   // Blue -> purple
-  if (pos < 1280) {
-    pos = pos - 1024;
-    return Color(pos, 0, 255);
+  else if (pos < 640)
+  {
+    pos -= 512;
+    return Color(pos * 2, 0, 255);
   }
-
+  
   // Purple -> red
-  pos = pos - 1280;
-  return Color(255, 0, 255 - pos);
+  else
+  {
+    pos -= 640;
+    return Color(255, 0, 255 - (pos * 2));
+  }
 }
 
 unsigned char Color::getRed()

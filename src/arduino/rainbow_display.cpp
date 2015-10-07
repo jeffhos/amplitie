@@ -10,18 +10,25 @@ RainbowDisplay::RainbowDisplay(Strand* strandP)
 
 void RainbowDisplay::update()
 {
-  for (int i = 0; i < m_strandP->getLength(); i++) {
-    unsigned int ledCycle = (m_cycle + (256 * i)) % 1536;
-    m_strandP->setColor(i, Color::Wheel(ledCycle));
-  }
-
+  for (int i = 0; i < m_strandP->getLength(); i++)
+  {
+    // tricky math! we use each pixel as a fraction of the full 256-color wheel
+    // (thats the i / strip.numPixels() part)
+    // Then add in j which makes the colors go around per pixel
+    // the % 256 is to make the wheel cycle around
+    Color color = Color::wheel(((i * Color::WHEEL_MAX / m_strandP->getLength()) + 
+      m_cycle) % Color::WHEEL_MAX);
+    m_strandP->setColor(i, color);
+  }  
+  m_strandP->show();
   m_cycle++;
-  if (m_cycle >= 1536) {
+  if (m_cycle >= Color::WHEEL_MAX)
+  {
     m_cycle = 0;
   }
 }
 
 long RainbowDisplay::updateTime()
 {
-  return 10L;
+  return UPDATE_TIME;
 }

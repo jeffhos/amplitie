@@ -3,10 +3,11 @@
 class Color {
 public:
   Color(unsigned char red, unsigned char green, unsigned char blue);
-  static Color Wheel(unsigned int pos);
+  static Color wheel(unsigned int pos);
   unsigned char getRed();
   unsigned char getGreen();
   unsigned char getBlue();
+  static const unsigned int WHEEL_MAX = 768;
 
 private:
   unsigned char m_red;

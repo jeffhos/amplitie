@@ -1,4 +1,9 @@
+///////////////////////////////////////////////////////////////////////////////
 // rainbow_display.h
+//
+// Copyright (c) 2015 Jeffrey P. Hoskinson
+// All rights reserved.
+///////////////////////////////////////////////////////////////////////////////
 
 #ifndef RAINBOW_DISPLAY_H
 #define RAINBOW_DISPLAY_H
@@ -15,6 +20,7 @@ public:
 private:
   Strand* m_strandP;
   unsigned int m_cycle;
+  static const unsigned long UPDATE_TIME = 10;
 };
 
 #endif

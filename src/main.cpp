@@ -3,6 +3,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "sfml_strand.h"
+// #include "arduino/sound_reactive.h"
 #include "arduino/rainbow_display.h"
 #include "arduino/breathe_display.h"
 
@@ -20,8 +21,12 @@ int main()
   // Create our virtual LED "strand"
   SfmlStrand strand(&window, NUM_LEDS);
 
+  // Create our microphone reader
+  // SfmlMicrophone mic;
+
   // Create the displays to run on our strand
   std::vector<Display*> displays;
+  // displays.push_back(new SoundReactive(&strand, &mic))
   displays.push_back(new RainbowDisplay(&strand));
   displays.push_back(new BreatheDisplay(&strand));
   int currentDisplay = 0;

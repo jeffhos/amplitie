@@ -1,3 +1,4 @@
 obj/
 .rake-builder
 main
+.DS_Store
