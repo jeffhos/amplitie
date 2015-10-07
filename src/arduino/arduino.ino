@@ -95,11 +95,12 @@ Adafruit_NeoPixel pixels =
   Adafruit_NeoPixel(NUM_PIXELS, LED_PIN, NEO_GRB + NEO_KHZ800);
 NeoPixelStrand strand(&pixels);
 
-static const int NUM_DISPLAY_TYPES = 2;
+static const int NUM_DISPLAY_TYPES = 3;
 Display* displays[NUM_DISPLAY_TYPES] = { 
   // new SoundReactive(&strand, MIC_PIN),
   new RainbowDisplay(&strand),
-  new BreatheDisplay(&strand)
+  new BreatheDisplay(&strand),
+  new Rule110Display(&strand);
 };
 
 // Index of the mode we're int
