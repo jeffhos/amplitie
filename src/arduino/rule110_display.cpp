@@ -1,4 +1,9 @@
+///////////////////////////////////////////////////////////////////////////////
 // rule110_display.cpp
+//
+// Copyright (c) 2015 Jeffrey P. Hoskinson
+// All rights reserved.
+///////////////////////////////////////////////////////////////////////////////
 
 #include <cstdlib>
 #include "rule110_display.h"
@@ -100,6 +105,7 @@ bool Rule110Display::getCell(int n)
   if (n >= 0 && n < m_cells.size()) {
     return m_cells[n];
   } else {
+    // This particular automata is more interesting if we consider the cells off the ends of the board to be alive
     return true;
   }
 }

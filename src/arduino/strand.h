@@ -1,10 +1,16 @@
+///////////////////////////////////////////////////////////////////////////////
 // strand.h
+//
+// Copyright (c) 2015 Jeffrey P. Hoskinson
+// All rights reserved.
+///////////////////////////////////////////////////////////////////////////////
 
 #ifndef STRAND_H
 #define STRAND_H
 
 #include "color.h"
 
+// Generic representation of the "strand" of LEDs
 class Strand {
 public:
   virtual void setColor(unsigned int n, Color color) = 0;

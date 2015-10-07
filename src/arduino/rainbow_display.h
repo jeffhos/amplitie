@@ -11,6 +11,7 @@
 #include "display.h"
 #include "strand.h"
 
+// Display that shows a slowly-changing rainbow of colors on the LEDs
 class RainbowDisplay : public Display {
 public:
   RainbowDisplay(Strand* strandP);
