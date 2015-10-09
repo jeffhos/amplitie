@@ -47,7 +47,7 @@ void SoundReactive::update()
     if (i >= height) {
       m_strandP->setColor(i, Color(0, 0, 0));
     } else {
-      m_strandP->setColor(i, Wheel(map(i, 0, m_strandP->getLength() - 1, 30, 150)));
+      m_strandP->setColor(i, Wheel(map(i, 0, m_strandP->getLength() - 1, 0, 255)));
     }
   }
   
@@ -92,13 +92,9 @@ long SoundReactive::updateTime() {
 // Input a value 0 to 255 to get a color value.
 // The colors are a transition r - g - b - back to r.
 Color SoundReactive::Wheel(uint8_t wheelPos) {
-  if (wheelPos < 85) {
-    return Color(wheelPos * 3, 255 - wheelPos * 3, 0);
-  } else if (wheelPos < 170) {
-    wheelPos -= 85;
-    return Color(255 - wheelPos * 3, 0, wheelPos * 3);
+  if (wheelPos < 128) {
+    return Color(wheelPos * 2, 255, 0);
   } else {
-    wheelPos -= 170;
-    return Color(0, wheelPos * 3, 255 - wheelPos * 3);
+    return Color(255, 255 - wheelPos * 2, 0);
   }
 }
