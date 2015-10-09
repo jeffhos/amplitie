@@ -9,7 +9,8 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "sfml_strand.h"
-// #include "arduino/sound_reactive.h"
+#include "sfml_microphone.h"
+#include "arduino/sound_reactive.h"
 #include "arduino/rainbow_display.h"
 #include "arduino/breathe_display.h"
 #include "arduino/rule110_display.h"
@@ -29,11 +30,12 @@ int main()
   SfmlStrand strand(&window, NUM_LEDS);
 
   // Create our microphone reader
-  // SfmlMicrophone mic;
+  SfmlMicrophone mic;
+  mic.start();
 
   // Create the displays to run on our strand
   std::vector<Display*> displays;
-  // displays.push_back(new SoundReactive(&strand, &mic))
+  displays.push_back(new SoundReactive(&strand, &mic));
   displays.push_back(new RainbowDisplay(&strand));
   displays.push_back(new BreatheDisplay(&strand));
   displays.push_back(new Rule110Display(&strand));
@@ -60,6 +62,9 @@ int main()
       strand.show();
     }
   }
+
+  // Clean up
+  mic.stop();
 
   return 0;
 }

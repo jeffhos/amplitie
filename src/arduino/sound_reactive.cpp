@@ -10,6 +10,7 @@
 #include <string.h>
 #include "display.h"
 #include "sound_reactive.h"
+#include "utils.h"
 
 SoundReactive::SoundReactive(Strand* strandP, Microphone* micP)
 {
@@ -26,7 +27,7 @@ void SoundReactive::update()
   uint16_t minLvl, maxLvl;
   int      n, height;
   
-  n   = m_micP->sample();              // Raw reading from mic 
+  n   = m_micP->sample();                  // Raw reading from mic 
   n   = abs(n - 512 - DC_OFFSET);          // Center on zero
   n   = (n <= NOISE) ? 0 : (n - NOISE);    // Remove noise/hum
   m_lvl = ((m_lvl * 7) + n) >> 3;          // "Dampened" reading (else looks twitchy)
@@ -41,35 +42,17 @@ void SoundReactive::update()
     height = m_top;
   }
 
-  // Keep 'peak' dot at top
-  if (height > m_peak) {
-    m_peak = height; 
-  }
-
   // Color pixels based on rainbow gradient
   for (i = 0; i < m_strandP->getLength(); i++) {
     if (i >= height) {
       m_strandP->setColor(i, Color(0, 0, 0));
     } else {
-      // m_strandP->setColor(i, Wheel(map(i, 0, m_strandP->getLength() - 1, 30, 150)));
+      m_strandP->setColor(i, Wheel(map(i, 0, m_strandP->getLength() - 1, 30, 150)));
     }
-  }
-
-  // Draw peak dot  
-  if (m_peak > 0 && m_peak <= m_strandP->getLength() - 1) {
-    // m_strandP->setColor(m_peak, Wheel(map(m_peak, 0, m_strandP->getLength() - 1, 30, 150)));
   }
   
   // Update strip
   m_strandP->show(); 
-
-  // Every few frames, make the peak pixel drop by 1:
-  if (++m_dotCount >= PEAK_FALL) {
-    if (m_peak > 0) {
-      m_peak--;
-    }
-    m_dotCount = 0;
-  }
 
   // Save sample for dynamic leveling
   m_vol[m_volCount] = n;                      

@@ -5,8 +5,10 @@
 // All rights reserved.
 ///////////////////////////////////////////////////////////////////////////////
 
+#include <iostream>
 #include <limits>
 #include "sfml_microphone.h"
+#include "arduino/utils.h"
 
 SfmlMicrophone::SfmlMicrophone()
 {
@@ -18,12 +20,21 @@ int SfmlMicrophone::sample()
   return m_lastSample;
 }
 
+bool SfmlMicrophone::onStart()
+{
+  setProcessingInterval(sf::milliseconds(10));
+  return true;
+}
+
 bool SfmlMicrophone::onProcessSamples(const sf::Int16* samples, std::size_t sampleCount)
 {
-  int leftSpan = std::numeric_limits<sf::Int16>::max() - std::numeric_limits<sf::Int16>::min();
-  float valueScaled = (samples[sampleCount - 1] - std::numeric_limits<sf::Int16>::min()) / (float) leftSpan;
+  m_lastSample = map(samples[sampleCount - 1], 
+                     std::numeric_limits<sf::Int16>::min(),
+                     std::numeric_limits<sf::Int16>::max(),
+                     0,
+                     1024);
 
-  m_lastSample = (unsigned int) valueScaled * 1024;
+  // std::cout << "Last sample is: " << m_lastSample << std::endl;
 
   return true;
 }

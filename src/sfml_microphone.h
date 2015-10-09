@@ -15,6 +15,7 @@ class SfmlMicrophone : public sf::SoundRecorder, public Microphone {
 public:
   SfmlMicrophone();
   int sample();
+  bool onStart();
   bool onProcessSamples(const sf::Int16* samples, std::size_t sampleCount);
 
 private:

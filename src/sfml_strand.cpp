@@ -15,7 +15,7 @@ SfmlStrand::SfmlStrand(sf::RenderWindow* windowP, unsigned int numLeds)
   for (int i = 0; i < numLeds; i++) {
     m_leds[i] = sf::CircleShape(25.0f);
     m_leds[i].setFillColor(sf::Color(0, 0, 0));
-    m_leds[i].setPosition(0, 50 * i);
+    m_leds[i].setPosition(0, 50 * (numLeds - i - 1));
   }
 }
   

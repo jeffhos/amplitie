@@ -28,7 +28,7 @@
 #include "display.h"
 #include "strand.h"
 #include "rainbow_display.h"
-// #include "sound_reactive.h"
+#include "sound_reactive.h"
 #include "breathe_display.h"
 
 class NeoPixelStrand : public Strand {
@@ -74,6 +74,27 @@ void NeoPixelStrand::show()
   m_strandP->show();
 }
 
+class ArduinoMicrophone
+{
+public:
+  ArduinoMicrophone(int micPin);
+  int sample();
+
+private:
+  int m_micPin;
+};
+
+ArduinoMicrophone::ArduinoMicrophone(int micPin)
+{
+  m_micPin = micPin;
+}
+
+int ArduinoMicrophone::sample() 
+{
+  return analogRead(m_micPin);
+}
+
+
 // The debounce time; increase if the output flickers
 static const long DEBOUNCE_DELAY = 50;     
 
@@ -91,13 +112,14 @@ static const int LED_PIN = 8;
 // Which pin the mode button is connected to
 static const int BUTTON_PIN = 12;
 
-Adafruit_NeoPixel pixels = 
-  Adafruit_NeoPixel(NUM_PIXELS, LED_PIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel pixels(NUM_PIXELS, LED_PIN, NEO_GRB + NEO_KHZ800);
 NeoPixelStrand strand(&pixels);
+
+ArduinoMicrophone mic(MIC_PIN);
 
 static const int NUM_DISPLAY_TYPES = 3;
 Display* displays[NUM_DISPLAY_TYPES] = { 
-  // new SoundReactive(&strand, MIC_PIN),
+  new SoundReactive(&strand, &mic),
   new RainbowDisplay(&strand),
   new BreatheDisplay(&strand),
   new Rule110Display(&strand);
