@@ -16,6 +16,7 @@
 class Rule110Display : public Display {
 public:
   Rule110Display(Strand* strandP);
+  void start();
   void update();
   long updateTime();
 

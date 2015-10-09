@@ -12,20 +12,11 @@ Rule110Display::Rule110Display(Strand* strandP)
   : m_strandP(strandP),
     m_cells(strandP->getLength())
 {
-  m_cycle = 0;
 }
 
-void Rule110Display::init() 
+void Rule110Display::start()
 {
-  // Set up a random initial state
-  int cutoff = RAND_MAX / 2;
-  for (int i = 0; i < m_cells.size(); i++) {
-    if (rand() > cutoff) {
-      m_cells[i] = true;
-    } else {
-      m_cells[i] = false;
-    }
-  }
+  m_cycle = 0;
 }
 
 void Rule110Display::update()

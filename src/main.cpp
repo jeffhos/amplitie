@@ -53,6 +53,7 @@ int main()
         if (currentDisplay >= displays.size()) {
           currentDisplay = 0;
         }
+        displays[currentDisplay]->start();
       }
     }
 

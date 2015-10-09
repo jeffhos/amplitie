@@ -153,6 +153,7 @@ void loop() {
     if (mode == NUM_DISPLAY_TYPES) {
       mode = 0;
     }
+    displays[mode]->start();
   }
 
   now = millis();
